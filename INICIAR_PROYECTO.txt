@@ -1,0 +1,37 @@
+PASOS PARA INICIAR FORMEN
+=========================
+
+1. Abre XAMPP.
+2. Presiona START en MySQL.
+3. Verifica que el puerto sea 3306.
+4. Abre el proyecto completo en IntelliJ IDEA.
+5. Espera que Maven descargue las dependencias.
+6. Ejecuta ForMenApplication.java.
+7. Abre http://localhost:8080
+
+La base de datos bd_formen se crea automaticamente gracias a:
+createDatabaseIfNotExist=true
+
+CONFIGURACION PREDETERMINADA
+----------------------------
+Servidor: 127.0.0.1
+Puerto: 3306
+Base de datos: bd_formen
+Usuario: root
+Contrasena: vacia
+
+Si tu usuario root tiene contrasena, edita:
+src/main/resources/application.properties
+
+y cambia esta linea:
+spring.datasource.password=${DB_PASSWORD:TU_CONTRASENA}
+
+Si MySQL usa otro puerto, por ejemplo 3307, cambia 3306 por 3307
+en spring.datasource.url.
+
+SOBRE EL WARNING DE java.lang.System::load
+------------------------------------------
+Es solamente una advertencia de Java 25 relacionada con Tomcat Native.
+No es la causa del error de Hibernate ni impide el funcionamiento del sistema.
+Para evitar incompatibilidades en el curso, se recomienda ejecutar el proyecto
+con JDK 21, que es la version configurada en el pom.xml.

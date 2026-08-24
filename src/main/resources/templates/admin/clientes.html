@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div th:replace="~{fragments :: navbar}"></div>
+<div th:replace="~{fragments :: alerts}"></div>
+
+<div class="container-fluid my-4">
+    <div class="row g-3">
+        <div class="col-md-3">
+            <div th:replace="~{fragments :: admin-sidebar}"></div>
+        </div>
+
+        <div class="col-md-9">
+            <h3 class="mb-3">Clientes registrados</h3>
+
+            <div class="table-responsive">
+                <table class="table table-bordered bg-white align-middle">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Compras</th>
+                        <th>Total gastado</th>
+                        <th>Origen</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="c:${clientes}">
+                        <td th:text="${c.nombres}"></td>
+                        <td th:text="${c.apellidos}"></td>
+                        <td th:text="${c.correo}"></td>
+                        <td th:text="${c.telefono}"></td>
+                        <td th:text="${#temporals.format(c.fechaRegistro,'dd/MM/yyyy HH:mm')}"></td>
+                        <td>
+                            <span class="badge"
+                                  th:classappend="${c.activo} ? ' bg-success' : ' bg-danger'"
+                                  th:text="${c.activo} ? 'Activo' : 'Inactivo'"></span>
+                        </td>
+                        <td th:text="${repo.comprasRealizadas(c.id)}"></td>
+                        <td th:text="'S/' + ${repo.totalGastado(c.id)}"></td>
+                        <td th:text="${c.origenRegistro}"></td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" th:href="@{/admin/clientes/editar/{id}(id=${c.id})}">
+                                <i class="bi bi-pencil-square"></i> Editar
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div th:replace="~{fragments :: navbar}"></div>
+<div th:replace="~{fragments :: alerts}"></div>
+
+<div class="container-fluid my-4">
+    <div class="row g-3">
+        <div class="col-md-3">
+            <div th:replace="~{fragments :: admin-sidebar}"></div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h3 th:text="${producto.id == null} ? 'Nuevo producto' : 'Editar producto'"></h3>
+                    <p class="text-muted mb-4">Completa los datos del producto. La imagen es obligatoria para productos nuevos.</p>
+
+                    <form th:action="@{/admin/productos/guardar}"
+                          th:object="${producto}"
+                          method="post"
+                          enctype="multipart/form-data">
+
+                        <input type="hidden" th:field="*{id}">
+                        <input type="hidden" th:field="*{imagen}">
+
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input class="form-control" th:field="*{nombre}" required maxlength="120"
+                                       placeholder="Ej: Polo oversized negro">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Categoría</label>
+                                <select name="categoriaId" class="form-select" required>
+                                    <option value="" disabled th:selected="${producto.categoria == null}">Selecciona una categoría</option>
+                                    <option th:each="c:${categorias}"
+                                            th:value="${c.id}"
+                                            th:text="${c.nombre}"
+                                            th:selected="${producto.categoria != null and producto.categoria.id == c.id}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Descripción</label>
+                            <textarea class="form-control" th:field="*{descripcion}" rows="3" required maxlength="1000"
+                                      placeholder="Describe la prenda, material, estilo o uso recomendado"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Precio</label>
+                                <input type="number" step="0.01" min="0.01" class="form-control" th:field="*{precio}" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Stock</label>
+                                <input type="number" min="0" class="form-control" th:field="*{stock}" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Stock mínimo</label>
+                                <input type="number" min="0" class="form-control" th:field="*{stockMinimo}" required>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Estado</label>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" th:field="*{activo}">
+                                    <label class="form-check-label">Activo en tienda</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-end">
+                            <div class="col-md-8 mb-3">
+                                <label class="form-label">Subir imagen del producto</label>
+                                <input type="file"
+                                       name="imagenArchivo"
+                                       class="form-control"
+                                       accept="image/png,image/jpeg,image/webp,image/gif"
+                                       th:required="${producto.id == null}">
+                                <div class="form-text">Formatos permitidos: JPG, JPEG, PNG, WEBP o GIF. Máximo 5MB.</div>
+                            </div>
+
+                            <div class="col-md-4 mb-3" th:if="${not #strings.isEmpty(producto.imagen)}">
+                                <label class="form-label">Imagen actual</label>
+                                <div>
+                                    <img th:src="${producto.imagenUrl}" class="rounded border" style="max-width: 140px; max-height: 120px; object-fit: cover;" alt="Imagen actual">
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-dark">
+                            <i class="bi bi-save"></i> Guardar
+                        </button>
+                        <a class="btn btn-secondary" th:href="@{/admin/productos}">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

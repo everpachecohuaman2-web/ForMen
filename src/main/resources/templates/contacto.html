@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto – ForMen</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div th:replace="~{fragments :: navbar}"></div>
+
+<div class="container my-5">
+
+  <div class="text-center mb-5">
+    <h2 class="fw-bold">Contáctanos</h2>
+    <p class="text-muted">¿Tienes alguna duda? Escríbenos y te responderemos pronto.</p>
+  </div>
+
+  <div class="row g-4 justify-content-center">
+
+    <!-- FORMULARIO -->
+    <div class="col-md-6">
+      <div class="card border-0 shadow-sm p-4">
+
+        <!-- Alerta de éxito si el mensaje fue enviado -->
+        <div th:if="${exito}" class="alert alert-success d-flex align-items-center gap-2">
+          <i class="bi bi-check-circle-fill"></i>
+          <span th:text="${exito}">Mensaje enviado.</span>
+        </div>
+
+        <form th:action="@{/contacto/enviar}" method="get">
+
+          <div class="mb-3">
+            <label class="form-label small fw-semibold">Nombre</label>
+            <input type="text" name="nombre" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-semibold">Correo electrónico</label>
+            <input type="email" name="email" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-semibold">Mensaje</label>
+            <textarea name="mensaje" class="form-control" rows="5"
+                      placeholder="Escribe tu consulta..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-dark w-100">
+            <i class="bi bi-send me-1"></i>Enviar Mensaje
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- INFO DE CONTACTO -->
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm p-4 h-100">
+        <h6 class="fw-bold mb-3">Información de contacto</h6>
+        <p class="small mb-3">
+          <i class="bi bi-geo-alt-fill me-2 text-dark"></i>
+          Feria Balta 258 – Chiclayo, Perú
+        </p>
+        <p class="small mb-3">
+          <i class="bi bi-envelope-fill me-2 text-dark"></i>
+          formen@gmail.pe
+        </p>
+        <p class="small mb-3">
+          <i class="bi bi-telephone-fill me-2 text-dark"></i>
+          951 478 963
+        </p>
+        <p class="small mb-3">
+          <i class="bi bi-clock-fill me-2 text-dark"></i>
+          Lunes a Sábado, 9:00 – 19:00
+        </p>
+
+        <hr>
+
+        <h6 class="fw-bold mb-2 small">Síguenos</h6>
+        <div class="d-flex gap-3 fs-5">
+          <a href="https://web.facebook.com/" class="text-dark"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/" class="text-dark"><i class="bi bi-instagram"></i></a>
+          <a href="https://www.tiktok.com/" class="text-dark"><i class="bi bi-tiktok"></i></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

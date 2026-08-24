@@ -1,0 +1,7 @@
+target/
+.idea/
+*.iml
+uploads/productos/*
+uploads/pagos/*
+!uploads/productos/.gitkeep
+!uploads/pagos/.gitkeep

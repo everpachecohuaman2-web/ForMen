@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+      <img src="/logo/logo.png" width="45" class="me-2" alt="ForMen Logo">
+      <span class="fw-bold" style="letter-spacing:.05em">ForMen</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link" th:href="@{/}"><i class="bi bi-house-door me-1"></i>Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/colecciones}"><i class="bi bi-grid me-1"></i>Colecciones</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/nosotros}"><i class="bi bi-people me-1"></i>Nosotros</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/contacto}"><i class="bi bi-envelope me-1"></i>Contacto</a></li>
+
+        <li class="nav-item"
+            sec:authorize="hasAnyRole('ADMIN','REPORTES','PRODUCTOS','INVENTARIO','CLIENTES','VENTAS','EMPLEADO')">
+          <a class="nav-link text-warning" th:href="@{/admin/dashboard}">
+            <i class="bi bi-shield-lock me-1"></i>Sistema
+          </a>
+        </li>
+
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+          <span class="nav-link text-info small">
+            <i class="bi bi-person-check me-1"></i><span sec:authentication="name"></span>
+          </span>
+        </li>
+
+        <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" th:href="@{/login}"><i class="bi bi-box-arrow-in-right me-1"></i>Login</a></li>
+        <li class="nav-item" sec:authorize="!isAuthenticated()"><a class="nav-link" th:href="@{/registro}"><i class="bi bi-person-plus me-1"></i>Registro</a></li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+          <form th:action="@{/logout}" method="post" class="d-inline">
+            <button class="btn btn-link nav-link" type="submit"><i class="bi bi-box-arrow-right me-1"></i>Salir</button>
+          </form>
+        </li>
+        <li class="nav-item ms-lg-2"><a class="btn btn-outline-light btn-sm" th:href="@{/carrito}"><i class="bi bi-cart4 me-1"></i>Carrito</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div th:fragment="alerts" class="container mt-3">
+  <div th:if="${exito}" class="alert alert-success alert-dismissible fade show"><span th:text="${exito}"></span><button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+  <div th:if="${error}" class="alert alert-danger alert-dismissible fade show"><span th:text="${error}"></span><button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+</div>
+
+<footer th:fragment="footer" class="bg-dark text-white mt-5 pt-4 pb-3">
+  <div class="container">
+    <div class="row text-center text-md-start">
+      <div class="col-md-4 mb-3">
+        <h6 class="text-uppercase fw-bold mb-3" style="letter-spacing:.1em">Contacto</h6>
+        <p class="mb-1 small"><i class="bi bi-geo-alt me-2"></i>Feria Balta 258 – Chiclayo</p>
+        <p class="mb-1 small"><i class="bi bi-envelope-at me-2"></i>formen@gmail.pe</p>
+        <p class="mb-0 small"><i class="bi bi-phone me-2"></i>951 478 963</p>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h6 class="text-uppercase fw-bold mb-3" style="letter-spacing:.1em">Síguenos</h6>
+        <a href="https://web.facebook.com/" class="text-white d-block mb-1 small text-decoration-none"><i class="bi bi-facebook me-2"></i>Facebook</a>
+        <a href="https://www.instagram.com/" class="text-white d-block mb-1 small text-decoration-none"><i class="bi bi-instagram me-2"></i>Instagram</a>
+        <a href="https://www.tiktok.com/" class="text-white d-block small text-decoration-none"><i class="bi bi-tiktok me-2"></i>TikTok</a>
+      </div>
+      <div class="col-md-4 mb-3">
+        <h6 class="text-uppercase fw-bold mb-3" style="letter-spacing:.1em">Atención al Cliente</h6>
+        <p class="mb-1 small"><i class="bi bi-calendar3 me-2"></i>Lunes a Sábado</p>
+        <p class="mb-0 small"><i class="bi bi-clock me-2"></i>9:00 – 19:00</p>
+      </div>
+    </div>
+    <hr class="border-secondary">
+    <p class="text-center text-muted small mb-0"><i class="bi bi-c-circle me-1"></i>2026 ForMen – Todos los derechos reservados</p>
+  </div>
+</footer>
+
+<div th:fragment="admin-sidebar" class="list-group shadow-sm">
+  <div class="list-group-item bg-dark text-white">
+    <div class="small text-white-50">Sesión iniciada</div>
+    <div class="fw-semibold" sec:authentication="name"></div>
+    <span class="badge bg-warning text-dark mt-1" sec:authentication="principal.authorities"></span>
+  </div>
+
+  <a th:href="@{/admin/dashboard}" class="list-group-item list-group-item-action"
+     sec:authorize="hasAnyRole('ADMIN','REPORTES','PRODUCTOS','INVENTARIO','CLIENTES','VENTAS','EMPLEADO')">
+    <i class="bi bi-speedometer2 me-2"></i>Dashboard
+  </a>
+
+  <a th:href="@{/admin/reportes}" class="list-group-item list-group-item-action"
+     sec:authorize="hasAnyRole('ADMIN','REPORTES')">
+    <i class="bi bi-bar-chart-line me-2"></i>Reportes
+  </a>
+
+  <a th:href="@{/admin/productos}" class="list-group-item list-group-item-action"
+     sec:authorize="hasAnyRole('ADMIN','PRODUCTOS')">
+    <i class="bi bi-box-seam me-2"></i>Productos
+  </a>
+
+  <a th:href="@{/admin/categorias}" class="list-group-item list-group-item-action"
+     sec:authorize="hasAnyRole('ADMIN','PRODUCTOS')">
+    <i class="bi bi-tags me-2"></i>Categorías
+  </a>
+
+  <a th:href="@{/admin/inventario}" class="list-group-item list-group-item-action"
+     sec:authorize="hasAnyRole('ADMIN','INVENTARIO')">
+    <i class="bi bi-clipboard-data me-2"></i>Inventario
+  </a>
+
+  <a th:href="@{/admin/ventas}" class="list-group-item list-group-item-action"
+     sec:authorize="hasAnyRole('ADMIN','VENTAS','REPORTES')">
+    <i class="bi bi-receipt me-2"></i>Ventas
+  </a>
+
+  <a th:href="@{/admin/clientes}" class="list-group-item list-group-item-action"
+     sec:authorize="hasAnyRole('ADMIN','CLIENTES')">
+    <i class="bi bi-people me-2"></i>Clientes
+  </a>
+
+  <a th:href="@{/admin/usuarios-sistema}" class="list-group-item list-group-item-action"
+     sec:authorize="hasRole('ADMIN')">
+    <i class="bi bi-person-badge me-2"></i>Usuarios y roles
+  </a>
+
+  <a th:href="@{/admin/configuracion}" class="list-group-item list-group-item-action"
+     sec:authorize="hasRole('ADMIN')">
+    <i class="bi bi-gear me-2"></i>Configuración
+  </a>
+
+  <a th:href="@{/}" class="list-group-item list-group-item-action">
+    <i class="bi bi-shop me-2"></i>Ver tienda
+  </a>
+</div>
+</html>

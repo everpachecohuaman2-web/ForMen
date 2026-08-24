@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosotros – ForMen</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div th:replace="~{fragments :: navbar}"></div>
+
+<div class="container my-5">
+
+  <div class="row align-items-center g-5">
+
+    <!-- TEXTO -->
+    <div class="col-md-6">
+      <h2 class="fw-bold mb-3">Sobre Nosotros</h2>
+      <p class="text-muted">
+        En <strong>ForMen</strong> creemos que la elegancia y el estilo definen
+        la confianza del hombre moderno. Somos una marca dedicada a ofrecer
+        prendas exclusivas que combinan calidad, confort y diseño sofisticado.
+      </p>
+      <p class="text-muted">
+        Nuestro equipo está formado por apasionados del diseño y la moda,
+        comprometidos en crear colecciones que realcen la identidad de cada cliente.
+      </p>
+
+      <div class="row g-3 mt-2">
+        <div class="col-sm-6">
+          <div class="card border-0 shadow-sm p-3 h-100">
+            <i class="bi bi-bullseye fs-4 mb-2 text-dark"></i>
+            <h6 class="fw-bold">Misión</h6>
+            <p class="text-muted small mb-0">
+              Impulsar la moda masculina en el Perú con prendas exclusivas y elegantes.
+            </p>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card border-0 shadow-sm p-3 h-100">
+            <i class="bi bi-eye fs-4 mb-2 text-dark"></i>
+            <h6 class="fw-bold">Visión</h6>
+            <p class="text-muted small mb-0">
+              Ser la marca líder en moda masculina a nivel nacional.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 d-flex gap-3 flex-wrap">
+        <div class="text-center">
+          <h3 class="fw-bold mb-0">500+</h3>
+          <small class="text-muted">Clientes satisfechos</small>
+        </div>
+        <div class="text-center">
+          <h3 class="fw-bold mb-0">4</h3>
+          <small class="text-muted">Colecciones activas</small>
+        </div>
+        <div class="text-center">
+          <h3 class="fw-bold mb-0">2020</h3>
+          <small class="text-muted">Año de fundación</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMAGEN -->
+    <div class="col-md-6 text-center">
+      <img src="/imagenes/nosotros.png"
+           class="img-fluid rounded shadow"
+           alt="Equipo ForMen"
+           style="max-height:420px;object-fit:cover;">
+    </div>
+
+  </div>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
